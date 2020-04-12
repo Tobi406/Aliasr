@@ -1,0 +1,3 @@
+aliases = [
+    { name = "switchserver", args = "(\\S*)", command = "server", commandArgs = "$1" }
+]
