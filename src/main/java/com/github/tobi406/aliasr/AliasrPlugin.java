@@ -102,8 +102,8 @@ public class AliasrPlugin {
                     String joinedArgs = String.join(" ", args);
 
                     AliasrPlugin.getInstance().commandManager.execute(source,
-                            this.command + " " +
-                                    joinedArgs.replaceAll(this.args, this.commandArgs)
+                            this.command + (args.length > 0 ? (" " +
+                                    joinedArgs.replaceAll(this.args, this.commandArgs)) : "")
                     );
                 }
             }, hashMap.get("name"));
