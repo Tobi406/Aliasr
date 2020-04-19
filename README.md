@@ -19,4 +19,4 @@ aliases = [
 ]
 ```
 This will create a command `/switchserver`.
-The command `/server` is gonna be aliases with the arguments with the first catch of RegEx.
+The command `/server` is gonna be an alias with the arguments of the first catch (which means the first argument, the server name) of RegEx.
