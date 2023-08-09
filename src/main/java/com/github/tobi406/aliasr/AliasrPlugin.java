@@ -1,13 +1,11 @@
 package com.github.tobi406.aliasr;
 
 import com.moandjiezana.toml.Toml;
-import com.velocitypowered.api.command.Command;
 import com.velocitypowered.api.command.CommandManager;
-import com.velocitypowered.api.command.CommandSource;
+import com.velocitypowered.api.command.SimpleCommand;
 import com.velocitypowered.api.plugin.Plugin;
 import com.velocitypowered.api.plugin.annotation.DataDirectory;
 
-import org.checkerframework.checker.nullness.qual.NonNull;
 import org.slf4j.Logger;
 
 import javax.inject.Inject;
@@ -86,31 +84,35 @@ public class AliasrPlugin {
     }
 
     public void registerCommands() {
-        this.commandManager.register(new AliasrCommand(), "aliasr");
+        this.commandManager.register("aliasr", new AliasrCommand());
         this.registeredCommands.add("aliasr");
         this.logger.info("Registered plugin command \"aliasr\"");
 
         List<HashMap<String, String>> aliases = this.config.getList("aliases");
+
         aliases.forEach(hashMap -> {
-            this.commandManager.register(new Command() {
+            this.commandManager.register(hashMap.get("name"), new SimpleCommand() {
                 private String args = hashMap.get("args");
                 private String command = hashMap.get("command");
                 private String commandArgs = hashMap.get("commandArgs");
 
                 @Override
-                public void execute(@NonNull CommandSource source, @NonNull String[] args) {
+                public void execute(Invocation invocation) {
                     String joinedArgs = String.join(" ", args);
 
-                    AliasrPlugin.getInstance().commandManager.execute(source,
-                            this.command + (args.length > 0 ? (" " +
-                                    joinedArgs.replaceAll(this.args, this.commandArgs)) : "")
+                    AliasrPlugin.getInstance().commandManager.executeAsync(
+                        invocation.source(),
+                        this.command
+                            + (args.length() > 0 ? (" " + joinedArgs.replaceAll(this.args, this.commandArgs)) : "")
                     );
                 }
-            }, hashMap.get("name"));
+            });
+
             this.registeredCommands.add(hashMap.get("name"));
             this.logger.info("Registered alias command \"" + hashMap.get("name") + "\"");
         });
     }
+
     public void unregisterCommands() {
         this.registeredCommands.forEach(this.commandManager::unregister);
     }

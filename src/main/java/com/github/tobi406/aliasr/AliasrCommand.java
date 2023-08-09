@@ -1,23 +1,22 @@
 package com.github.tobi406.aliasr;
 
-import com.velocitypowered.api.command.Command;
-import com.velocitypowered.api.command.CommandSource;
+import com.velocitypowered.api.command.RawCommand;
 
-import net.kyori.text.TextComponent;
-import net.kyori.text.format.TextColor;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.NamedTextColor;
 
-import org.checkerframework.checker.nullness.qual.NonNull;
-
-public class AliasrCommand implements Command {
+public class AliasrCommand implements RawCommand {
 
     @Override
-    public void execute(@NonNull CommandSource source, @NonNull String[] args) {
-        if (source.hasPermission("aliasr.reload")) AliasrPlugin.getInstance().reload();
-        source.sendMessage(TextComponent.of(
-                (source.hasPermission("aliasr.reload") ? "Reloaded " : "Running ")).append(
-                TextComponent.of("Aliasr").color(TextColor.AQUA)).append(
-                TextComponent.of(" version ")).append(
-                TextComponent.of("1.0-BETA").color(TextColor.AQUA))
+    public void execute(Invocation invocation) {
+        if (invocation.source().hasPermission("aliasr.reload"))
+            AliasrPlugin.getInstance().reload();
+
+        invocation.source().sendMessage(
+            Component.text((invocation.source().hasPermission("aliasr.reload") ? "Reloaded " : "Running "))
+                .append(Component.text("Aliasr").color(NamedTextColor.AQUA))
+                .append(Component.text(" version "))
+                .append(Component.text("1.0-BETA").color(NamedTextColor.AQUA))
         );
     }
 }
