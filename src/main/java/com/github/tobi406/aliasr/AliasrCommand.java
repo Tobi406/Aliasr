@@ -16,7 +16,7 @@ public class AliasrCommand implements RawCommand {
             Component.text((invocation.source().hasPermission("aliasr.reload") ? "Reloaded " : "Running "))
                 .append(Component.text("Aliasr").color(NamedTextColor.AQUA))
                 .append(Component.text(" version "))
-                .append(Component.text("1.0-BETA").color(NamedTextColor.AQUA))
+                .append(Component.text("1.1-BETA").color(NamedTextColor.AQUA))
         );
     }
 }

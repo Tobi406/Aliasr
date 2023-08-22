@@ -21,7 +21,7 @@ import java.util.List;
 @Plugin(
         id = "aliasr",
         name = "Aliasr",
-        version = "1.0-BETA",
+        version = "1.1-BETA",
         description = "Simple Alias manager using RegEx",
         authors = { "Tobi406" }
 )
@@ -98,7 +98,7 @@ public class AliasrPlugin {
 
                 @Override
                 public void execute(Invocation invocation) {
-                    String joinedArgs = String.join(" ", args);
+                    String joinedArgs = String.join(" ", invocation.arguments());
 
                     AliasrPlugin.getInstance().commandManager.executeAsync(
                         invocation.source(),
