@@ -98,7 +98,7 @@ public class AliasrPlugin {
 
                 @Override
                 public void execute(Invocation invocation) {
-                    String joinedArgs = String.join(" ", args);
+                    String joinedArgs = String.join(" ", invocation.arguments());
 
                     AliasrPlugin.getInstance().commandManager.executeAsync(
                         invocation.source(),
